@@ -21,8 +21,11 @@ show_help() {
 
   echo -e "  move <source> <destination> Move a file or directory"
   echo -e "  copy <source> <destination> Copy a file or directory"
-  echo -e "  compress <file>   Compress a file or directory"
-  echo -e "  extract <file>    Extract a compressed file"
+  echo -e "  compress <file>   Compress files and directories"
+  echo -e "  extract <archive> Extract compressed archives"
+  
+  echo -e "  run <command>     Run commands with options (background, monitor, etc.)"
+  echo -e "  ports [port]      Show listening ports and manage processes"
 
   # Help
   echo -e "  help              Show this help menu"

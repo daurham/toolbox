@@ -25,6 +25,10 @@ case "$COMMAND" in
   copy)     source "$LIB/copy.sh";    copy_item "$@";;
   compress) source "$LIB/compress.sh"; compress_item "$@";;
   extract)  source "$LIB/extract.sh";  extract_item "$@";;
+  
+  run)      source "$LIB/run.sh";     run_command "$@";;
+  ports)    source "$LIB/ports.sh";   show_ports "$@";;
+  
   # hash)     source "$LIB/hash.sh";    calculate_hash "$@";;
   # encrypt)  source "$LIB/encrypt.sh";  encrypt_item "$@";;
   help)     source "$LIB/help.sh";    show_help "$@";;

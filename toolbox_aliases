@@ -16,5 +16,8 @@ alias copy='toolbox copy'
 alias compress='toolbox compress'
 alias extract='toolbox extract'
 
+alias run='toolbox run'
+alias ports='toolbox ports'
+
 # Help
 alias help='toolbox help'

@@ -315,6 +315,96 @@ test_help() {
     assert "Show help" "true" "$(echo "$output" | grep -q "Toolbox" && echo "true" || echo "false")"
 }
 
+test_compress() {
+    echo -e "${CYAN}🗜️  Testing compress function${RESET}"
+    
+    # Create test files
+    echo "test content" > compress_test.txt
+    mkdir -p compress_test_dir
+    echo "nested content" > compress_test_dir/file.txt
+    
+    source "$LIB/compress.sh"
+    
+    # Test compressing a file
+    compress_item "compress_test.txt" "gz" > /dev/null 2>&1
+    assert_file_exists "Compress file to gz" "compress_test.txt.gz"
+    
+    # Test compressing a directory
+    compress_item "compress_test_dir" "tar.gz" > /dev/null 2>&1
+    assert_file_exists "Compress directory to tar.gz" "compress_test_dir.tar.gz"
+    
+    # Test help
+    local output=$(compress_item "-h" 2>&1)
+    assert "Compress help" "true" "$(echo "$output" | grep -q "Usage:" && echo "true" || echo "false")"
+}
+
+test_extract() {
+    echo -e "${CYAN}📦 Testing extract function${RESET}"
+    
+    # Create test archive
+    echo "test content" > extract_test.txt
+    gzip extract_test.txt
+    
+    source "$LIB/extract.sh"
+    
+    # Test extracting a file
+    extract_item "extract_test.txt.gz" > /dev/null 2>&1
+    assert_file_exists "Extract gz file" "extract_test.txt"
+    
+    # Test help
+    local output=$(extract_item "-h" 2>&1)
+    assert "Extract help" "true" "$(echo "$output" | grep -q "Usage:" && echo "true" || echo "false")"
+}
+
+test_run() {
+    echo -e "${CYAN}▶️  Testing run function${RESET}"
+    
+    source "$LIB/run.sh"
+    
+    # Test help
+    local output=$(run_command "-h" 2>&1)
+    assert "Run help" "true" "$(echo "$output" | grep -q "Usage:" && echo "true" || echo "false")"
+    
+    # Test running a simple command
+    local output=$(run_command "echo 'test'" 2>&1)
+    assert "Run simple command" "true" "$(echo "$output" | grep -q "test" && echo "true" || echo "false")"
+    
+    # Test running a JavaScript file
+    echo "console.log('Hello from JS');" > test_script.js
+    local output=$(run_command "test_script.js" 2>&1)
+    assert "Run JavaScript file" "true" "$(echo "$output" | grep -q "JavaScript" && echo "true" || echo "false")"
+    
+    # Test running a Python file
+    echo "print('Hello from Python')" > test_script.py
+    local output=$(run_command "test_script.py" 2>&1)
+    assert "Run Python file" "true" "$(echo "$output" | grep -q "Python" && echo "true" || echo "false")"
+    
+    # Test running a Bash file
+    echo "echo 'Hello from Bash'" > test_script.sh
+    chmod +x test_script.sh
+    local output=$(run_command "test_script.sh" 2>&1)
+    assert "Run Bash file" "true" "$(echo "$output" | grep -q "Bash" && echo "true" || echo "false")"
+    
+    # Test unknown file type
+    echo "some content" > test_script.unknown
+    local output=$(run_command "test_script.unknown" 2>&1)
+    assert "Unknown file type" "true" "$(echo "$output" | grep -q "Unknown file type" && echo "true" || echo "false")"
+}
+
+test_ports() {
+    echo -e "${CYAN}🔌 Testing ports function${RESET}"
+    
+    source "$LIB/ports.sh"
+    
+    # Test help
+    local output=$(show_ports "-h" 2>&1)
+    assert "Ports help" "true" "$(echo "$output" | grep -q "Usage:" && echo "true" || echo "false")"
+    
+    # Test showing all ports
+    local output=$(show_ports 2>&1)
+    assert "Show all ports" "true" "$(echo "$output" | grep -q "Listening Ports" && echo "true" || echo "false")"
+}
+
 # Main test runner
 main() {
     test_start
@@ -333,6 +423,12 @@ main() {
     test_rename
     test_update
     test_help
+    test_compress
+    test_extract
+    test_run
+    test_ports
+    test_run
+    test_ports
     
     cleanup_test_env
     test_end
