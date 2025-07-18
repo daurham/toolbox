@@ -8,6 +8,7 @@ show_help() {
   echo -e "${YELLOW}Commands:${RESET}"
   # CRUD
   echo -e "  create <file>     Create file or directory structure"
+  echo -e "  create -a <type> <name> Create app (vite, t3, svelte, react, next, vue, etc.)"
   echo -e "  read <file>       Print file contents"
   echo -e "  update <file>     Update file timestamp or create backup"
   echo -e "  delete <target>   Delete a file or directory"
@@ -26,5 +27,7 @@ show_help() {
   # Help
   echo -e "  help              Show this help menu"
 
+  echo
+  echo -e "${CYAN}App Types:${RESET} vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro"
   echo
 }
