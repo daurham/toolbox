@@ -1,0 +1,20 @@
+# Toolbox
+alias create='toolbox create'
+alias read='toolbox read'
+alias update='toolbox update'
+alias delete='toolbox delete'
+
+alias find='toolbox find'
+alias list='toolbox list'
+alias info='toolbox info'
+alias rename='toolbox rename'
+alias size='toolbox size'
+
+# File Operations
+alias move='toolbox move'
+alias copy='toolbox copy'
+alias compress='toolbox compress'
+alias extract='toolbox extract'
+
+# Help
+alias help='toolbox help'

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Entry point: dispatches to toolbox.sh
+
+TOOLBOX_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$TOOLBOX_ROOT/toolbox.sh" "$@"
+

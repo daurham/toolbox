@@ -1,0 +1,63 @@
+# Toolbox
+
+## Structure
+```
+~/.toolbox/
+├── bin/
+│   └── toolbox           # Entry point (executable CLI)
+├── lib/
+│   ├── utils.sh          # Colors, icons, logging, help display
+│   ├── create.sh         # Command: create
+│   ├── read.sh           # Command: read
+│   ├── delete.sh         # Command: delete
+│   └── help.sh           # Command: help (optional)
+└── toolbox.sh            # Dispatch logic for routing commands
+```
+
+## Usage
+
+```bash
+toolbox create
+toolbox read <name>
+toolbox delete <name>
+toolbox help
+```
+
+## License
+
+```
+MIT
+```
+
+## Set up
+
+In your `~/.bashrc` or `~/.zshrc`
+```sh
+export PATH="$HOME/.toolbox/bin:$PATH"
+```
+Then make it executable:
+```sh
+chmod +x ~/.toolbox/bin/toolbox
+```
+
+Then add these to your aliases:
+```sh
+# Toolbox
+if [ -f ~/.toolbox/toolbox_aliases ]; then
+    . ~/.toolbox/toolbox_aliases
+fi
+```
+
+Finally, reload your shell:
+```sh
+source ~/.bashrc  # or `source ~/.zshrc`
+```
+
+---
+
+## When adding new tools:
+### REMEMBER: When adding new, be sure to:
+- 1. Add to README.md
+- 2. Add to help.sh
+- 3. Add to toolbox.sh
+- 4. Add to toolbox_aliases
