@@ -219,9 +219,9 @@ execute_command() {
     info "Running in detached mode"
     nohup $command > /dev/null 2>&1 &
     local pid=$!
-    echo $pid > ".toolbox_run_$pid.pid"
+    echo $pid > "toolbox_run_$pid.pid"
     success "Started detached process (PID: $pid)"
-    info "PID saved to .toolbox_run_$pid.pid"
+    info "PID saved to toolbox_run_$pid.pid"
     
   elif [[ "$options" == *"-b"* ]]; then
     # Background mode - run in background
@@ -237,7 +237,7 @@ execute_command() {
     echo "----------------------------------------"
     $command &
     local pid=$!
-    echo $pid > ".toolbox_monitor_$pid.pid"
+    echo $pid > "toolbox_monitor_$pid.pid"
     
     # Monitor the process
     while kill -0 $pid 2>/dev/null; do
@@ -247,7 +247,7 @@ execute_command() {
       sleep 2
     done
     
-    rm -f ".toolbox_monitor_$pid.pid"
+    rm -f "toolbox_monitor_$pid.pid"
     success "Process completed"
     
   else
@@ -278,7 +278,7 @@ list_running() {
   local found=false
   
   # Check for PID files
-  for pid_file in .toolbox_run_*.pid .toolbox_monitor_*.pid; do
+  for pid_file in toolbox_run_*.pid toolbox_monitor_*.pid; do
     if [[ -f "$pid_file" ]]; then
       local pid=$(cat "$pid_file")
       local process_name=$(ps -p $pid -o comm= 2>/dev/null)
@@ -329,7 +329,7 @@ kill_running() {
     success "Process $pid killed"
     
     # Remove PID file if it exists
-    rm -f ".toolbox_run_$pid.pid" ".toolbox_monitor_$pid.pid"
+    rm -f "toolbox_run_$pid.pid" "toolbox_monitor_$pid.pid"
   else
     error "Process $pid not found"
     return 1

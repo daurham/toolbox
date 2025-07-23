@@ -23,7 +23,7 @@ install:
 	@echo "📦 Installing toolbox..."
 	@chmod +x bin/toolbox
 	@echo "✅ Toolbox installed. Add to your PATH:"
-	@echo "   export PATH=\"\$$HOME/.toolbox/bin:\$$PATH\""
+	@echo "   export PATH=\"\$$HOME/toolbox/bin:\$$PATH\""
 
 # Clean up test artifacts
 clean:
