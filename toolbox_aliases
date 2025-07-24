@@ -19,5 +19,10 @@ alias extract='toolbox extract'
 alias run='toolbox run'
 alias ports='toolbox ports'
 
+# System commands
+alias config='toolbox config'
+alias logs='toolbox logs'
+alias backup='toolbox backup'
+
 # Help
 alias help='toolbox help'

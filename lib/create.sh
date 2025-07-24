@@ -10,7 +10,7 @@ create_item() {
     if [[ -z "$app_type" ]]; then
       info "Usage: toolbox create -a <app-type> <app-name>"
       info "Available app types:"
-      info "  vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro"
+      info "  vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro, csharp"
       info "Examples:"
       info "  toolbox create -a vite my-app"
       info "  toolbox create --app next my-next-app"
@@ -31,7 +31,7 @@ create_item() {
     info "Usage: toolbox create <file or path> (use trailing / for directories)"
     info "Or: toolbox create -a <app-type> <app-name>"
     info ""
-    info "Available app types: vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro"
+    info "Available app types: vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro, csharp"
     return
   fi
 
@@ -106,9 +106,12 @@ create_app() {
     "astro")
       create_astro_app "$app_name"
       ;;
+    "csharp"|"c#"|"dotnet")
+      create_csharp_app "$app_name"
+      ;;
     *)
       error "Unknown app type: $app_type"
-      info "Available types: vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro"
+      info "Available types: vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro, csharp"
       return 1
       ;;
   esac
@@ -274,6 +277,34 @@ create_astro_app() {
     info "  npm run dev"
   else
     error "npm not found. Please install Node.js and npm first."
+    return 1
+  fi
+}
+
+create_csharp_app() {
+  local app_name="$1"
+  local project_type="${2:-console}"  # Default to console if not specified
+  
+  info "Creating C# $project_type project: $app_name"
+  
+  if command -v dotnet &> /dev/null; then
+    # Create the project
+    if dotnet new "$project_type" -n "$app_name"; then
+      success "C# $project_type project created successfully!"
+      info "Next steps:"
+      info "  cd $app_name"
+      info "  dotnet run"
+      info ""
+      info "Available C# project types:"
+      info "  console, web, mvc, webapi, blazorserver, blazorwasm, xunit, nunit"
+      info "  classlib, worker, grpc, razor, razorclasslib, mstest"
+    else
+      error "Failed to create C# project"
+      return 1
+    fi
+  else
+    error "dotnet CLI not found. Please install .NET SDK first."
+    info "Download from: https://dotnet.microsoft.com/download"
     return 1
   fi
 }

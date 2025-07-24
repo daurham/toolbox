@@ -8,7 +8,7 @@ show_help() {
   echo -e "${YELLOW}Commands:${RESET}"
   # CRUD
   echo -e "  create <file>     Create file or directory structure"
-  echo -e "  create -a <type> <name> Create app (vite, t3, svelte, react, next, vue, etc.)"
+  echo -e "  create -a <type> <name> Create app (vite, t3, svelte, react, next, vue, csharp, etc.)"
   echo -e "  read <file>       Print file contents"
   echo -e "  update <file>     Update file timestamp or create backup"
   echo -e "  delete <target>   Delete a file or directory"
@@ -27,10 +27,15 @@ show_help() {
   echo -e "  run <command>     Run commands with options (background, monitor, etc.)"
   echo -e "  ports [port]      Show listening ports and manage processes"
 
+  # System commands
+  echo -e "  config <cmd>      Manage toolbox configuration"
+  echo -e "  logs <cmd>        View and manage logs"
+  echo -e "  backup <cmd>      Create and manage backups"
+
   # Help
   echo -e "  help              Show this help menu"
 
   echo
-  echo -e "${CYAN}App Types:${RESET} vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro"
+  echo -e "${CYAN}App Types:${RESET} vite, t3, svelte, react, next, vue, nuxt, angular, gatsby, astro, csharp"
   echo
 }

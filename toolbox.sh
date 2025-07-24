@@ -3,7 +3,20 @@
 TOOLBOX_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LIB="$TOOLBOX_ROOT/lib"
 
+# Load core utilities first
 source "$LIB/utils.sh"
+
+# Load and initialize configuration system
+source "$LIB/config.sh"
+load_config
+
+# Load and initialize logging system
+source "$LIB/logging.sh"
+init_logging
+
+# Load and initialize backup system
+source "$LIB/backup.sh"
+init_backup
 
 COMMAND="$1"
 shift || true
@@ -29,9 +42,15 @@ case "$COMMAND" in
   run)      source "$LIB/run.sh";     run_command "$@";;
   ports)    source "$LIB/ports.sh";   show_ports "$@";;
   
+  # New system commands
+  config)   source "$LIB/config_cmd.sh"; config_command "$@";;
+  logs)     source "$LIB/logs_cmd.sh";   logs_command "$@";;
+  backup)   source "$LIB/backup_cmd.sh"; backup_command "$@";;
+  
   # hash)     source "$LIB/hash.sh";    calculate_hash "$@";;
   # encrypt)  source "$LIB/encrypt.sh";  encrypt_item "$@";;
   help)     source "$LIB/help.sh";    show_help "$@";;
   -h|--help|"") source "$LIB/help.sh"; show_help;;
+  --interactive|-i) source "$LIB/interactive.sh"; interactive_main;;
   *) error "Unknown command: $COMMAND"; show_help;;
 esac

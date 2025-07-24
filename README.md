@@ -9,6 +9,14 @@
 
 A comprehensive command-line toolbox that provides essential utilities for file management, system operations, and development tasks. Built with pure Bash for maximum compatibility and performance.
 
+## ✨ New Features (v2.0)
+
+- 🔧 **Configuration System** - Customize behavior with `~/toolbox/config.sh`
+- 📝 **Enhanced Logging** - Multi-level logging with file rotation
+- 🔄 **Backup System** - Automatic backups with retention policies
+- 🛡️ **Safety Features** - Confirmation prompts and auto-backup
+- 🎨 **Beautiful Output** - Colored output with emojis and icons
+
 ## 📁 Project Structure
 
 ```
@@ -17,9 +25,15 @@ A comprehensive command-line toolbox that provides essential utilities for file 
 │   └── 🚀 toolbox           # Entry point (executable CLI)
 ├── 📂 lib/
 │   ├── 🎨 utils.sh          # Colors, icons, logging, help display
+│   ├── 🔧 config.sh         # Configuration system
+│   ├── 📝 logging.sh        # Enhanced logging system
+│   ├── 🔄 backup.sh         # Backup and restore system
+│   ├── ⚙️  config_cmd.sh     # Configuration command
+│   ├── 📋 logs_cmd.sh       # Logs management command
+│   ├── 💾 backup_cmd.sh     # Backup management command
 │   ├── ➕ create.sh          # Command: create
 │   ├── 📖 read.sh            # Command: read
-│   ├── 🗑️  delete.sh          # Command: delete
+│   ├── 🗑️  delete.sh          # Command: delete (with auto-backup)
 │   ├── 📋 list.sh            # Command: list
 │   ├── ✏️  rename.sh          # Command: rename
 │   ├── 📁 move.sh            # Command: move
@@ -72,6 +86,11 @@ A comprehensive command-line toolbox that provides essential utilities for file 
    source ~/.bashrc  # or `source ~/.zshrc`
    ```
 
+6. **Initialize configuration** (optional but recommended)
+   ```bash
+   toolbox config init
+   ```
+
 ## 📖 Usage
 
 ### Basic Commands
@@ -95,6 +114,51 @@ A comprehensive command-line toolbox that provides essential utilities for file 
 | `toolbox ports` | Check open ports | `toolbox ports` |
 | `toolbox run <script>` | Execute scripts | `toolbox run backup.sh` |
 
+### 🔧 New System Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `toolbox config show` | Show current configuration | `toolbox config show` |
+| `toolbox config set <key> <value>` | Set configuration value | `toolbox config set TOOLBOX_EDITOR code` |
+| `toolbox logs show [lines]` | Show recent logs | `toolbox logs show 100` |
+| `toolbox logs clear` | Clear all logs | `toolbox logs clear` |
+| `toolbox backup create <source>` | Create backup | `toolbox backup create important_file.txt` |
+| `toolbox backup list` | List all backups | `toolbox backup list` |
+| `toolbox backup restore <backup>` | Restore from backup | `toolbox backup restore backup_20241201_143022` |
+
+## ⚙️ Configuration
+
+The toolbox uses a configuration file at `~/toolbox/config.sh`. Run `toolbox config init` to create it with defaults.
+
+### Key Settings
+
+```bash
+# Editor preferences
+export TOOLBOX_EDITOR="nano"                    # Default editor
+
+# Backup settings
+export TOOLBOX_BACKUP_DIR="$HOME/toolbox/backups"  # Backup directory
+export TOOLBOX_AUTO_BACKUP="true"               # Auto-backup before destructive operations
+export TOOLBOX_BACKUP_RETENTION="30"            # Days to keep backups
+
+# Logging settings
+export TOOLBOX_LOG_LEVEL="error"                # debug, info, warn, error
+export TOOLBOX_LOG_FILE="$HOME/toolbox/toolbox.log"  # Log file location
+export TOOLBOX_MAX_LOG_SIZE="10MB"              # Max log file size
+
+# Safety settings
+export TOOLBOX_CONFIRM_DELETE="true"            # Confirm before deleting files
+
+# Display settings
+export TOOLBOX_COLORS="true"                    # Enable colored output
+export TOOLBOX_TIMESTAMP="true"                 # Show timestamps in logs
+
+# Advanced settings
+export TOOLBOX_DEBUG="false"                    # Enable debug mode
+export TOOLBOX_QUIET="false"                    # Suppress non-error output
+export TOOLBOX_SUPPRESS_INIT="false"            # Suppress initialization messages
+```
+
 ## 🎯 Features
 
 - ✨ **Cross-platform compatibility** - Works on Unix/Linux systems and Windows with Git Bash
@@ -104,6 +168,10 @@ A comprehensive command-line toolbox that provides essential utilities for file 
 - 🔧 **Extensible** - Easy to add new commands
 - 🧪 **Tested** - Includes test suite
 - 💻 **Windows support** - Full compatibility with Git Bash on Windows
+- 🔧 **Configuration system** - Customize behavior to your preferences
+- 📝 **Enhanced logging** - Multi-level logging with file rotation
+- 🔄 **Backup system** - Automatic backups with retention policies
+- 🛡️ **Safety features** - Confirmation prompts and auto-backup
 
 ## 🛠️ Development
 
@@ -119,11 +187,8 @@ When adding new commands, remember to update:
 ### Running Tests
 
 ```bash
-# Run the test suite via
+# Run the test suite
 ./run_tests.sh
-
-# Or
-run run_test.sh
 
 # Or use the Makefile
 make test
